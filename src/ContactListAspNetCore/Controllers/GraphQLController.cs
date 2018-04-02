@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ using GraphQL.Validation.Complexity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using P7.GraphQLCore;
 using P7.GraphQLCore.Validators;
 
@@ -19,9 +22,8 @@ namespace ContactListAspNetCore.Controllers
     public class GraphQLQuery
     {
         public string OperationName { get; set; }
-        public string NamedQuery { get; set; }
         public string Query { get; set; }
-        public string Variables { get; set; }
+        public JObject Variables { get; set; }
     }
 
     [Produces("application/json")]
@@ -57,16 +59,20 @@ namespace ContactListAspNetCore.Controllers
             _pluginValidationRules = pluginValidationRules.ToList();
         }
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody]GraphQLQuery query)
+        public async Task<IActionResult> PostAsync( )
         {
-            var inputs = query.Variables.ToInputs();
-            var queryToExecute = query.Query;
 
-            if (!string.IsNullOrWhiteSpace(query.NamedQuery))
+            string body;
+            using (var streamReader = new StreamReader(Request.Body))
             {
-                queryToExecute = _namedQueries[query.NamedQuery];
+                body = await streamReader.ReadToEndAsync().ConfigureAwait(true);
             }
 
+            var query = JsonConvert.DeserializeObject<GraphQLQuery>(body);
+
+            var inputs = query.Variables.ToInputs();
+            var queryToExecute = query.Query;
+ 
             var result = await _executer.ExecuteAsync(_ =>
             {
                 _.UserContext = new GraphQLUserContext(_httpContextAccessor);
