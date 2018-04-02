@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="GraphQL" Version="2.0.0-alpha-870" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\P7.GraphQLCore\P7.GraphQLCore.csproj" />
+    <ProjectReference Include="..\P7.SimpleDocument.Store\P7.SimpleDocument.Store.csproj" />
+    <ProjectReference Include="..\P7.Store\P7.Store.csproj" />
+  </ItemGroup>
+
+</Project>
