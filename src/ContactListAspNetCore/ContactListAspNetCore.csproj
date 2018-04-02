@@ -16,9 +16,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Properties\PublishProfiles\p7apiapp - Web Deploy.pubxml" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
