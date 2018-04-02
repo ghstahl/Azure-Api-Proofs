@@ -57,6 +57,8 @@ namespace P7.GraphQLCore.Validators
                 select c).ToList();
 //            IEnumerable<string> claimsEnumerable = query.ToList();
             var authenticated = user?.Identity.IsAuthenticated ?? false;
+            authenticated = true;
+            //TODO: remove this authenticated override
             var myEnterLeaveListenerSink = new MyEnterLeaveListenerSink();
             var currentEnterLeaveListenerState = (ICurrentEnterLeaveListenerState) myEnterLeaveListenerSink;
             var myEnterLeaveListener = new MyEnterLeaveListener(_ =>
@@ -130,8 +132,8 @@ namespace P7.GraphQLCore.Validators
                             return result;
                         });
                     }
-                    
-
+                    //TODO: remove this
+                    canAccess = true;
                   //  var canAccess = rcQuery.All(x => claimsEnumerable?.Contains(x) ?? false);
                     if (!canAccess)
                     {
@@ -176,7 +178,8 @@ namespace P7.GraphQLCore.Validators
 
 
             var authenticated = user?.Identity.IsAuthenticated ?? false;
-
+            authenticated = true;
+            //TODO: Remove this 
             return new EnterLeaveListener(_ =>
             {
                 _.Match<Operation>(op =>
