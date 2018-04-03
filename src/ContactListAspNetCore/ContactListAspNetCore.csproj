@@ -35,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AuthHandler\AuthHandler.csproj" />
     <ProjectReference Include="..\P7.BlogStore.Core\P7.BlogStore.Core.csproj" />
     <ProjectReference Include="..\P7.BlogStore.Hugo\P7.BlogStore.Hugo.csproj" />
     <ProjectReference Include="..\P7.Core\P7.Core.csproj" />

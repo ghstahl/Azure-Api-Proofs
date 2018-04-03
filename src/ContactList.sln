@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P7.HugoStore.Core", "P7.Hug
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P7.SimpleDocument.Store.Hugo", "P7.SimpleDocument.Store.Hugo\P7.SimpleDocument.Store.Hugo.csproj", "{FD12B2A2-DE29-4628-A550-3953C904C706}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthHandler", "AuthHandler\AuthHandler.csproj", "{10225B12-93B7-41CD-8CB3-E973E5EBC636}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{FD12B2A2-DE29-4628-A550-3953C904C706}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD12B2A2-DE29-4628-A550-3953C904C706}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD12B2A2-DE29-4628-A550-3953C904C706}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10225B12-93B7-41CD-8CB3-E973E5EBC636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10225B12-93B7-41CD-8CB3-E973E5EBC636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10225B12-93B7-41CD-8CB3-E973E5EBC636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10225B12-93B7-41CD-8CB3-E973E5EBC636}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
