@@ -14,9 +14,10 @@ namespace ContactListAspNetCore.Controllers
     {
         private const string FILENAME = "contacts.json";
         private GenericStorage _storage;
-
-        public ContactsController()
+        private IMyDatabase _myDatabase;
+        public ContactsController(IMyDatabase myDatabase)
         {
+            _myDatabase = myDatabase;
             _storage = new GenericStorage();
         }
         private async Task<IEnumerable<Contact>> GetContacts()
@@ -105,5 +106,14 @@ namespace ContactListAspNetCore.Controllers
                 return new NoContentResult();
             }
         }
+    }
+
+    public interface IMyDatabase
+    {
+    }
+
+    public class MyDatabase : IMyDatabase
+    {
+        
     }
 }

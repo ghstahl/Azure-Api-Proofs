@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
+using ContactListAspNetCore.Controllers;
 using P7.BlogStore.Hugo.Extensions;
 using P7.GraphQLCore.Stores;
 
@@ -24,6 +25,8 @@ namespace ContactListAspNetCore
                 .As<InMemoryGraphQLFieldAuthority>()
                 .As<IGraphQLFieldAuthority>()
                 .SingleInstance();
+
+            builder.RegisterType<MyDatabase>().As<IMyDatabase>();
         }
     }
 }
