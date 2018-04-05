@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using ContactListAspNetCore.Controllers;
-using P7.BlogStore.Hugo.Extensions;
+
 using P7.GraphQLCore.Stores;
 
 namespace ContactListAspNetCore
@@ -17,9 +17,7 @@ namespace ContactListAspNetCore
         protected override void Load(ContainerBuilder builder)
         {
             var env = P7.Core.Global.HostingEnvironment;
-            var dbPath = Path.Combine(env.ContentRootPath, "App_Data/blogstore");
-            Directory.CreateDirectory(dbPath);
-            builder.AddBlogStoreBiggyConfiguration(dbPath, TenantId);
+
 
             builder.RegisterType<InMemoryGraphQLFieldAuthority>()
                 .As<InMemoryGraphQLFieldAuthority>()

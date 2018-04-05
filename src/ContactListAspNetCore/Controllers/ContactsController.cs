@@ -44,7 +44,7 @@ namespace ContactListAspNetCore.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Contact>), 200)]
       
-        [Route("~/contacts")]
+        [Route("contacts")]
         public async Task<IEnumerable<Contact>> Get()
         {
             return await GetContacts();
@@ -57,7 +57,7 @@ namespace ContactListAspNetCore.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Contact>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(IEnumerable<Contact>), (int)HttpStatusCode.NotFound)]
-        [Route("~/contacts/{id}")]
+        [Route("contacts/{id}")]
         public async Task<Contact> Get( int id)
         {
             var contacts = await GetContacts();
@@ -71,7 +71,7 @@ namespace ContactListAspNetCore.Controllers
         /// <returns>The saved contact</returns>
         [HttpPost]
         [ProducesResponseType(typeof(Contact), (int)HttpStatusCode.OK)]
-        [Route("~/contacts")]
+        [Route("contacts")]
         public async Task<Contact> Post([FromBody] Contact contact)
         {
             var contacts = await GetContacts();
@@ -89,7 +89,7 @@ namespace ContactListAspNetCore.Controllers
         [HttpDelete]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [Route("~/contacts/{id}")]
+        [Route("contacts/{id}")]
         public async Task<IActionResult> Delete( int id)
         {
             var contacts = await GetContacts();

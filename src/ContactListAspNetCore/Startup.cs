@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -25,6 +26,7 @@ namespace ContactListAspNetCore
 {
     public class Startup
     {
+        AuthHandler.AutofacModule ss = new AuthHandler.AutofacModule();
         private readonly IHostingEnvironment _hostingEnvironment;
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
@@ -79,6 +81,9 @@ namespace ContactListAspNetCore
             services.AddMemoryCache();
 
             services.AddLogging();
+            var securityKey = Configuration["SecurityKey"];
+            var securityKeyBytes = Encoding.UTF8.GetBytes(Configuration["SecurityKey"]);
+            var issuerSigningKey = new SymmetricSecurityKey(securityKeyBytes);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -90,9 +95,10 @@ namespace ContactListAspNetCore
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = "yourdomain.com",
                         ValidAudience = "yourdomain.com",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))
+                        IssuerSigningKey = issuerSigningKey
                     };
                 });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc();
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -142,6 +148,7 @@ namespace ContactListAspNetCore
           
             app.UseStaticFiles();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
+
             app.UseSwagger();
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>

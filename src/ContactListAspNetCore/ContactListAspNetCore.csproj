@@ -24,6 +24,7 @@
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="GraphQL" Version="2.0.0-alpha-870" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.AzureKeyVault.HostingStartup" Version="2.0.2-preview2-final" />
     <PackageReference Include="Serilog" Version="2.6.0" />
     <PackageReference Include="Serilog.Sinks.Literate" Version="3.0.0" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
@@ -36,8 +37,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthHandler\AuthHandler.csproj" />
-    <ProjectReference Include="..\P7.BlogStore.Core\P7.BlogStore.Core.csproj" />
-    <ProjectReference Include="..\P7.BlogStore.Hugo\P7.BlogStore.Hugo.csproj" />
     <ProjectReference Include="..\P7.Core\P7.Core.csproj" />
     <ProjectReference Include="..\P7.GraphQLCore\P7.GraphQLCore.csproj" />
     <ProjectReference Include="..\P7.SimpleDocument.Store\P7.SimpleDocument.Store.csproj" />
