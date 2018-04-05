@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
  namespace AuthHandler.Models
 {
-    public interface IAuthStore  
+    public interface IBindStore  
     {
 
         /// <summary>
         /// Gets the tenantId of this store.
         /// </summary>
         /// <returns></returns>
-        Task<Auth> GetAuthTokenAsync(string type, string token);
+        Task<BindResult> BindAsync(string type, string token);
     }
 }

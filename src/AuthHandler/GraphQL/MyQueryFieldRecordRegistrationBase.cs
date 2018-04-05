@@ -8,28 +8,28 @@ namespace AuthHandler.GraphQL
 {
     public class MyQueryFieldRecordRegistrationBase : IQueryFieldRecordRegistration
     {
-        private IAuthStore _authStore;
+        private IBindStore _bindStore;
 
         public MyQueryFieldRecordRegistrationBase(
-            IAuthStore authStore)
+            IBindStore bindStore)
         {
-            _authStore = authStore;
+            _bindStore = bindStore;
         }
 
         public void AddGraphTypeFields(QueryCore queryCore)
         {
-            var fieldName = "auth";
-            var fieldType = queryCore.FieldAsync<AuthType>(name: fieldName,
+            var fieldName = "bind";
+            var fieldType = queryCore.FieldAsync<BindResultType>(name: fieldName,
                 description: null,
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<AuthInput>> {Name = "input"}),
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<BindInput>> {Name = "input"}),
                 resolve: async context =>
                 {
                     try
                     {
                         var userContext = context.UserContext.As<GraphQLUserContext>();
-                        var input = context.GetArgument<Auth>("input");
+                        var input = context.GetArgument<BindInputHandle>("input");
                        
-                        var result = await _authStore.GetAuthTokenAsync(input.Type,input.Token);
+                        var result = await _bindStore.BindAsync(input.Type,input.Token);
                         return result;
                     }
                     catch (Exception e)

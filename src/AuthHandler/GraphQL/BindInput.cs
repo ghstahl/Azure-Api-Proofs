@@ -2,11 +2,11 @@ using GraphQL.Types;
 
 namespace AuthHandler.GraphQL
 {
-    public class AuthInput : InputObjectGraphType
+    public class BindInput : InputObjectGraphType
     {
-        public AuthInput()
+        public BindInput()
         {
-            Name = "authInput";
+            Name = "bindInput";
             Field<NonNullGraphType<StringGraphType>>("type");
             Field<NonNullGraphType<StringGraphType>>("token");
         }

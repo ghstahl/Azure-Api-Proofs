@@ -9,10 +9,10 @@ namespace AuthHandler
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<AuthInput>();
-            builder.RegisterType<AuthType>();
-            builder.RegisterType<Auth>();
-            builder.RegisterType<TestAuthStore>().As<IAuthStore>();
+            builder.RegisterType<BindInput>();
+            builder.RegisterType<BindResultType>();
+            builder.RegisterType<BindInputHandle>();
+            builder.RegisterType<TestBindStore>().As<IBindStore>();
         }
     }
 }

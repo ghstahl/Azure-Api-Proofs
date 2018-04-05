@@ -9,15 +9,16 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AuthHandler.GraphQL
 {
-    public class TestAuthStore : IAuthStore
+    public class TestBindStore : IBindStore
     {
         private IConfiguration _configuration;
 
-        public TestAuthStore(IConfiguration configuration)
+        public TestBindStore(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        public async Task<Auth> GetAuthTokenAsync(string type, string token)
+
+        public async Task<BindResult> BindAsync(string type, string token)
         {
             var claims = new[]
             {
@@ -31,12 +32,12 @@ namespace AuthHandler.GraphQL
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
-            return new Auth()
+            return new BindResult()
             {
                 Type = type,
-                Token = new JwtSecurityTokenHandler().WriteToken(jwtToken)
+                Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
+                SPOCEntity = Guid.NewGuid().ToString()
             };
-
         }
     }
 }
