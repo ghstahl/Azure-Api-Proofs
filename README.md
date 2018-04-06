@@ -1,12 +1,15 @@
 # Azure-Api-Proofs
 
 ```
-query q($input: authInput!) {
-  auth(input: $input) {
+query q($input: bindInput!){
+  bind(input: $input){
     type
     token
+    sPOCEntity
   }
 }
+```
+```
 {
    "input": {
 		"type": "test",
