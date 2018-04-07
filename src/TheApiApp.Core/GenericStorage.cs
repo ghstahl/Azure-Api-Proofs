@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using ContactListAspNetCore.Models;
 using Newtonsoft.Json;
+using TheApiApp.Core.Models;
 
-namespace ContactListAspNetCore
+namespace TheApiApp.Core
 {
     public class GenericStorage
     {

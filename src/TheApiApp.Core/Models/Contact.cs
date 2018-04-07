@@ -1,5 +1,5 @@
 ﻿
-namespace ContactListAspNetCore.Models
+namespace TheApiApp.Core.Models
 {
     public class Contact
     {

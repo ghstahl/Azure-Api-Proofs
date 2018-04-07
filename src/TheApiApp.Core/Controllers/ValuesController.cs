@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace ContactListAspNetCore.Controllers
+namespace TheApiApp.Core.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
@@ -35,10 +35,7 @@ namespace ContactListAspNetCore.Controllers
         {
         }
 
-        /// <summary>
-        /// Deletes a specific TodoItem.
-        /// </summary>
-        /// <param name="id"></param> 
+        // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

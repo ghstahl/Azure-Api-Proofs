@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -22,18 +21,16 @@ using P7.GraphQLCore;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace ContactListAspNetCore
+namespace TheApiApp.Core
 {
     public class Startup
     {
-        AuthHandler.AutofacModule ss = new AuthHandler.AutofacModule();
         private readonly IHostingEnvironment _hostingEnvironment;
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             _hostingEnvironment = env;
             P7.Core.Global.HostingEnvironment = _hostingEnvironment;
             Configuration = configuration;
-
             var appDataPath = Path.Combine(env.ContentRootPath, "App_Data");
 
             var RollingPath = Path.Combine(env.ContentRootPath, "logs/myapp-{Date}.txt");
@@ -142,10 +139,10 @@ namespace ContactListAspNetCore
             return serviceProvider;
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-          
             app.UseStaticFiles();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
 

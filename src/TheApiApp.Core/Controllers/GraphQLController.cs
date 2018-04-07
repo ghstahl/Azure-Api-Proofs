@@ -17,7 +17,7 @@ using Newtonsoft.Json.Linq;
 using P7.GraphQLCore;
 using P7.GraphQLCore.Validators;
 
-namespace ContactListAspNetCore.Controllers
+namespace TheApiApp.Core.Controllers
 {
     public class GraphQLQuery
     {

@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using ContactListAspNetCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using TheApiApp.Core.Models;
 
-namespace ContactListAspNetCore.Controllers
+namespace TheApiApp.Core.Controllers
 {
   
     [Produces("application/json")]
