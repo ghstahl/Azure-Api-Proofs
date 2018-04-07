@@ -41,6 +41,7 @@
     <ProjectReference Include="..\P7.GraphQLCore\P7.GraphQLCore.csproj" />
     <ProjectReference Include="..\P7.SimpleDocument.Store\P7.SimpleDocument.Store.csproj" />
     <ProjectReference Include="..\P7.Store\P7.Store.csproj" />
+    <ProjectReference Include="..\ReferenceHandlers\ReferenceHandlers.csproj" />
   </ItemGroup>
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
     <ItemGroup>
