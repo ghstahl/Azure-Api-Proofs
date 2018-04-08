@@ -45,7 +45,7 @@ Authorization: Bearer {token}
 ```
 ## Query
 ```
-query qMyAuth{
+query q{
   identity{
     claims{
       ... ClaimFragment
@@ -57,6 +57,7 @@ fragment ClaimFragment on claim {
  	name
   value 
 }
+
 ```
 ## Result  
 ```
