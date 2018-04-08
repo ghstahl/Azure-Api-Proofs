@@ -54,7 +54,7 @@ query q{
 }
 
 fragment ClaimFragment on claim {
- 	name
+  name
   value 
 }
 
