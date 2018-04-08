@@ -45,8 +45,8 @@ Authorization: Bearer {token}
 ```
 ## Query
 ```
-query qMyAuth{
-  myAuth{
+query q{
+  identity{
     claims{
       ... ClaimFragment
     }
@@ -57,12 +57,13 @@ fragment ClaimFragment on claim {
   name
   value 
 }
+
 ```
 ## Result  
 ```
 {
   "data": {
-    "myAuth": {
+    "identity": {
       "claims": [
         {
           "name": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
@@ -70,7 +71,7 @@ fragment ClaimFragment on claim {
         },
         {
           "name": "exp",
-          "value": "1523191643"
+          "value": "1523197262"
         },
         {
           "name": "iss",
