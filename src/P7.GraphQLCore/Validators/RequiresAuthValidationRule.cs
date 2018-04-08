@@ -57,8 +57,7 @@ namespace P7.GraphQLCore.Validators
                 select c).ToList();
 //            IEnumerable<string> claimsEnumerable = query.ToList();
             var authenticated = user?.Identity.IsAuthenticated ?? false;
-            authenticated = true;
-            //TODO: remove this authenticated override
+
             var myEnterLeaveListenerSink = new MyEnterLeaveListenerSink();
             var currentEnterLeaveListenerState = (ICurrentEnterLeaveListenerState) myEnterLeaveListenerSink;
             var myEnterLeaveListener = new MyEnterLeaveListener(_ =>
@@ -107,12 +106,22 @@ namespace P7.GraphQLCore.Validators
                     var requiredClaims = _graphQLFieldAuthority
                         .FetchRequiredClaimsAsync(currentOperationType, currentFieldPath).Result;
                     var canAccess = true;
-                    if (requiredClaims != null)
+                    if (requiredClaims.StatusCode == GraphQLFieldAuthority_CODE.FOUND)
                     {
-                        var rcQuery = (from requiredClaim in requiredClaims
-                            let c = requiredClaim.Type
+                        if (!user.Identity.IsAuthenticated)
+                        {
+                            canAccess = false;
+                        }
+                    }
+                   
+                    if (canAccess && 
+                        requiredClaims != null && 
+                        requiredClaims.Value.Any())
+                    {
+                        var rcQuery = (from requiredClaim in requiredClaims.Value
+                                       let c = requiredClaim.Type
                             select c).ToList();
-                        canAccess = requiredClaims.All(x =>
+                        canAccess = requiredClaims.Value.All(x =>
                         {
                             var result = false;
                             foreach (var ce in user.Claims)
@@ -129,12 +138,12 @@ namespace P7.GraphQLCore.Validators
                                     }
                                 }
                             }
+
                             return result;
                         });
                     }
-                    //TODO: remove this
-                    canAccess = true;
-                  //  var canAccess = rcQuery.All(x => claimsEnumerable?.Contains(x) ?? false);
+
+                    //  var canAccess = rcQuery.All(x => claimsEnumerable?.Contains(x) ?? false);
                     if (!canAccess)
                     {
                         context.ReportError(new ValidationError(
@@ -142,6 +151,7 @@ namespace P7.GraphQLCore.Validators
                             "auth-required",
                             $"You are not authorized to run this query.",
                             fieldAst));
+
                     }
                 });
                 /*
@@ -178,8 +188,7 @@ namespace P7.GraphQLCore.Validators
 
 
             var authenticated = user?.Identity.IsAuthenticated ?? false;
-            authenticated = true;
-            //TODO: Remove this 
+
             return new EnterLeaveListener(_ =>
             {
                 _.Match<Operation>(op =>

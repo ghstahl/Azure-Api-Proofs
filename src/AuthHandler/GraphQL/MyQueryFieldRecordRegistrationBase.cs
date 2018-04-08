@@ -42,7 +42,7 @@ namespace AuthHandler.GraphQL
                     //                    return await Task.Run(() => { return ""; });
                 },
                 deprecationReason: null);
-            fieldName = "myAuth";
+            fieldName = "identity";
             fieldType = queryCore.FieldAsync<IdentityModelType>(name: fieldName,
                 description: null,
                 resolve: async context =>

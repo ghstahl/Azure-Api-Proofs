@@ -7,8 +7,18 @@ using GraphQL.Language.AST;
 
 namespace P7.GraphQLCore.Stores
 {
+    public enum GraphQLFieldAuthority_CODE
+    {
+        FOUND = 0,
+        NOT_FOUND = 1
+    }
+    public class FetchRequireClaimsResult<T>
+    {
+        public T Value { get; set; }
+        public GraphQLFieldAuthority_CODE StatusCode { get; set; }
+    }
     public interface IGraphQLFieldAuthority
     {
-        Task<IEnumerable<Claim>> FetchRequiredClaimsAsync(OperationType operationType, string fieldPath);
+        Task<FetchRequireClaimsResult<IEnumerable<Claim>>> FetchRequiredClaimsAsync(OperationType operationType, string fieldPath);
     }
 }

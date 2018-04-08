@@ -18,19 +18,21 @@ namespace P7.GraphQLCore.Stores
             _settings = settings;
             if (_settings != null && _settings.Value.Records != null)
             {
-               
+
                 foreach (var record in _settings.Value.Records)
                 {
-                    if (record.Claims != null)
+                    if (record.Claims == null)
                     {
-                        var query = from item in record.Claims
-                            let c = new Claim(item.Type, item.Value)
-                            select c;
-                        var claims = query.ToList();
-                        AddClaims(record.OperationType, record.FieldPath, claims);
-
+                        record.Claims = new List<ClaimConfigHandle>();
                     }
-                }                
+
+                    var query = from item in record.Claims
+                        let c = new Claim(item.Type, item.Value)
+                        select c;
+                    var claims = query.ToList();
+                    AddClaims(record.OperationType, record.FieldPath, claims);
+
+                }
             }
         }
 
@@ -42,13 +44,19 @@ namespace P7.GraphQLCore.Stores
                        (_listGraphQLFieldAuthorityRecords = new List<GraphQLFieldAuthorityRecord>());
             }
         }
-        public async Task<IEnumerable<Claim>> FetchRequiredClaimsAsync(OperationType operationType, string fieldPath)
+        public async Task<FetchRequireClaimsResult<IEnumerable<Claim>>> FetchRequiredClaimsAsync(OperationType operationType, string fieldPath)
         {
             var query = from item in GraphQLFieldAuthorityRecords
                         where item.OperationType == operationType && fieldPath == item.FieldPath
                         select item;
             GraphQLFieldAuthorityRecord record;
-            return !query.Any() ? null : query.FirstOrDefault().Claims;
+            var result = new FetchRequireClaimsResult<IEnumerable<Claim>>()
+            {
+                StatusCode = query.Any() ? GraphQLFieldAuthority_CODE.FOUND : GraphQLFieldAuthority_CODE.NOT_FOUND,
+                Value = !query.Any() ? new List<Claim>() : query.FirstOrDefault().Claims
+            };
+
+            return result;
         }
 
         public void AddClaims(OperationType operationType, string fieldPath, List<Claim> claims)
