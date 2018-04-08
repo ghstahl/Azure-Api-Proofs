@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AuthHandler.Models;
 using GraphQL;
 using GraphQL.Types;
@@ -30,6 +32,34 @@ namespace AuthHandler.GraphQL
                         var input = context.GetArgument<BindInputHandle>("input");
                        
                         var result = await _bindStore.BindAsync(input.Type,input.Token);
+                        return result;
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                    return null;
+                    //                    return await Task.Run(() => { return ""; });
+                },
+                deprecationReason: null);
+            fieldName = "myAuth";
+            fieldType = queryCore.FieldAsync<IdentityModelType>(name: fieldName,
+                description: null,
+                resolve: async context =>
+                {
+                    try
+                    {
+                        var userContext = context.UserContext.As<GraphQLUserContext>();
+                        var result = new AuthHandler.Models.IdentityModel();
+                        result.Claims = new List<ClaimHandle>();
+                        foreach (var claim in userContext.HttpContextAccessor.HttpContext.User.Claims)
+                        {
+                            result.Claims.Add(new ClaimHandle()
+                            {
+                                Name = claim.Type,
+                                Value = claim.Value
+                            });
+                        }
                         return result;
                     }
                     catch (Exception e)

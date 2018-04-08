@@ -13,6 +13,9 @@ namespace AuthHandler
             builder.RegisterType<BindResultType>();
             builder.RegisterType<BindInputHandle>();
             builder.RegisterType<TestBindStore>().As<IBindStore>();
+
+            builder.RegisterType<IdentityModelType>();
+            builder.RegisterType<ClaimHandleType>();
         }
     }
 }
