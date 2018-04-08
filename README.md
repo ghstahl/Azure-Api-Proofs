@@ -19,8 +19,8 @@ query q($input: bindInput!){
 ```
 {
    "input": {
-		"type": "test",
-    "token": "tokenTest"
+      "type": "test",
+      "token": "tokenTest"
    }
 }
 
