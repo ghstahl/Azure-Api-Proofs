@@ -20,6 +20,7 @@ namespace TheApiApp.Core
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseHealthChecks("/health", TimeSpan.FromSeconds(180))     // Or to host on a separate port: .UseHealthChecks(port)
                 .Build();
     }
 }

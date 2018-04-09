@@ -17,9 +17,11 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using P7.Core;
 using P7.Core.IoC;
+using P7.Core.Scheduler.Scheduling;
 using P7.GraphQLCore;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
+using TheApiApp.Core.Health;
 
 namespace TheApiApp.Core
 {
@@ -45,6 +47,7 @@ namespace TheApiApp.Core
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile("appsettings-filters-graphql.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings-healthcheck.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsDevelopment())
@@ -66,6 +69,7 @@ namespace TheApiApp.Core
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddMyHealthCheck(Configuration);
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -130,6 +134,12 @@ namespace TheApiApp.Core
 
             services.RegisterP7CoreConfigurationServices(Configuration);
             services.RegisterGraphQLCoreConfigurationServices(Configuration);
+
+            services.AddScheduler((sender, args) =>
+            {
+                Console.Write(args.Exception.Message);
+                args.SetObserved();
+            });
 
             services.AddDependenciesUsingAutofacModules();
             var serviceProvider = services.BuildServiceProvider(Configuration);

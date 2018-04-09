@@ -1,6 +1,9 @@
 ﻿using Autofac;
+using Microsoft.Extensions.Hosting;
+using P7.Core.Scheduler.Scheduling;
 using P7.GraphQLCore.Stores;
 using TheApiApp.Core.Controllers;
+using TheApiApp.Core.Scheduler;
 
 namespace TheApiApp.Core
 {
@@ -17,6 +20,12 @@ namespace TheApiApp.Core
                 .SingleInstance();
 
             builder.RegisterType<MyDatabase>().As<IMyDatabase>();
+            builder.RegisterType<DummyHealthScheduledTask>().As<IScheduledTask>();
+            builder.RegisterType<SchedulerHostedService>()
+                .As<IHostedService>()
+                .SingleInstance();
+
+
         }
     }
 }

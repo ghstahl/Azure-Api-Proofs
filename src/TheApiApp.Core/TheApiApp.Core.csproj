@@ -37,8 +37,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthHandler\AuthHandler.csproj" />
+    <ProjectReference Include="..\P7.AspNetCore.HealthChecks\P7.AspNetCore.HealthChecks.csproj" />
     <ProjectReference Include="..\P7.Core\P7.Core.csproj" />
     <ProjectReference Include="..\P7.GraphQLCore\P7.GraphQLCore.csproj" />
+    <ProjectReference Include="..\P7.HealthCheck.Core\P7.HealthCheck.Core.csproj" />
     <ProjectReference Include="..\P7.SimpleDocument.Store\P7.SimpleDocument.Store.csproj" />
     <ProjectReference Include="..\P7.Store\P7.Store.csproj" />
     <ProjectReference Include="..\ReferenceHandlers\ReferenceHandlers.csproj" />
