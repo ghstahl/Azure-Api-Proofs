@@ -48,17 +48,16 @@ Authorization: Bearer {token}
 query q{
   identity{
     claims{
-      ... ClaimFragment
+      ... ClaimFragment2
+      ... ClaimFragment3
     }
   }
 }
 
-fragment ClaimFragment on claim {
-  name
-  value 
-}
-
+fragment ClaimFragment2 on claim {value}
+fragment ClaimFragment3 on claim {name}
 ```
+
 ## Result  
 ```
 {
