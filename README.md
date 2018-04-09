@@ -1,5 +1,8 @@
 # Azure-Api-Proofs
 
+## More About Auth
+[More...](docs/more-about-auth.md)
+
 ## Altair
 This is a GraphQL IDE allows editing of a header.  You can find it [here](https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja?hl=en)  
 
