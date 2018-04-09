@@ -20,12 +20,15 @@ namespace P7.GraphQLCore.Validators
             OperationType = operationType;
             CurrentFieldPath = currentFieldPath;
         }
-
-        public OperationType OperationType { get; private set; }
-        public string CurrentFieldPath { get; private set; }
+        public FragmentSpread FragmentSpread { get; set; }
+        public FragmentDefinition FragmentDefinition { get; set; }
+        public OperationType OperationType { get; set; }
+        public string CurrentFieldPath { get; set; }
+        
     }
 
-    
+     
+
     public interface IEnterLeaveListenerEventSink
     {
         void OnEvent(EnterLeaveListenerState enterLeaveListenerState);
@@ -56,6 +59,8 @@ namespace P7.GraphQLCore.Validators
         {
             var isField = TypeHelper<Field>.IsType(node.GetType());
             var isOperation = TypeHelper<Operation>.IsType(node.GetType());
+            var isFragmentSpread = TypeHelper<FragmentSpread>.IsType(node.GetType());
+            var isFragmentDefinition = TypeHelper<FragmentDefinition>.IsType(node.GetType());
 
             if (isOperation)
             {
@@ -70,6 +75,24 @@ namespace P7.GraphQLCore.Validators
                 var next = CurrentFieldPath + "/" + field.Name;
                 RunningPath.Push(next);
                 FireEnterLeaveListenerState(new EnterLeaveListenerState(OperationType, CurrentFieldPath));
+            }
+
+            if (isFragmentSpread)
+            {
+                var fragmentSpread = node as FragmentSpread;
+                FireEnterLeaveListenerState(new EnterLeaveListenerState(OperationType, CurrentFieldPath)
+                {
+                    FragmentSpread = fragmentSpread
+                });
+            }
+
+            if (isFragmentDefinition)
+            {
+                var fragmentDefinition = node as FragmentDefinition;
+                FireEnterLeaveListenerState(new EnterLeaveListenerState(OperationType, CurrentFieldPath)
+                {
+                    FragmentDefinition = fragmentDefinition
+                });
             }
             _listeners
                 .Where(l => l.Enter != null && l.Matches(node))

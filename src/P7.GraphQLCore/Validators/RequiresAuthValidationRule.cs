@@ -29,11 +29,37 @@ namespace P7.GraphQLCore.Validators
     {
         class MyEnterLeaveListenerSink : IEnterLeaveListenerEventSink, ICurrentEnterLeaveListenerState
         {
+            private EnterLeaveListenerState CurrentFragmentDefinitionRoot { get; set; }
+            private Dictionary<string, EnterLeaveListenerState> _fragmentMap;
+            private Dictionary<string, EnterLeaveListenerState> FragmentMap
+            {
+                get { return _fragmentMap ?? (_fragmentMap = new Dictionary<string, EnterLeaveListenerState>()); }
+            }
+
             public EnterLeaveListenerState EnterLeaveListenerState { get; private set; }
 
             public void OnEvent(EnterLeaveListenerState enterLeaveListenerState)
             {
-                EnterLeaveListenerState = enterLeaveListenerState;
+
+                if (enterLeaveListenerState.FragmentSpread != null)
+                {
+                    FragmentMap.Add(enterLeaveListenerState.FragmentSpread.Name, enterLeaveListenerState);
+                }
+                else if (enterLeaveListenerState.FragmentDefinition != null)
+                {
+                    CurrentFragmentDefinitionRoot = FragmentMap[enterLeaveListenerState.FragmentDefinition.Name];
+                    FragmentMap.Remove(enterLeaveListenerState.FragmentDefinition.Name);
+                     
+                }
+                else
+                {
+                    EnterLeaveListenerState = enterLeaveListenerState;
+                    if (CurrentFragmentDefinitionRoot != null)
+                    {
+                        EnterLeaveListenerState.CurrentFieldPath =
+                            $"{CurrentFragmentDefinitionRoot.CurrentFieldPath}{EnterLeaveListenerState.CurrentFieldPath}";
+                    }
+                }
             }
         }
 
