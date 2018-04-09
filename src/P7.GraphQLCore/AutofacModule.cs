@@ -86,7 +86,7 @@ namespace P7.GraphQLCore
             });
 
             
-            builder.RegisterType<TestValidationRule>()
+            builder.RegisterType<RequiresAuthValidationRule>()
                 .As<IPluginValidationRule>()
                 .SingleInstance();
 

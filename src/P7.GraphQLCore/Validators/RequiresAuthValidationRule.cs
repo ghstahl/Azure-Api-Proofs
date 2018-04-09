@@ -25,15 +25,42 @@ namespace P7.GraphQLCore.Validators
     }
 
     public interface IPluginValidationRule: IValidationRule { }
-    public class TestValidationRule : IPluginValidationRule
+    public class RequiresAuthValidationRule : IPluginValidationRule
     {
         class MyEnterLeaveListenerSink : IEnterLeaveListenerEventSink, ICurrentEnterLeaveListenerState
         {
             private EnterLeaveListenerState CurrentFragmentDefinitionRoot { get; set; }
-            private Dictionary<string, EnterLeaveListenerState> _fragmentMap;
-            private Dictionary<string, EnterLeaveListenerState> FragmentMap
+            private Dictionary<string, Stack<EnterLeaveListenerState>> _fragmentMap;
+            private Dictionary<string, Stack<EnterLeaveListenerState>> FragmentMap
             {
-                get { return _fragmentMap ?? (_fragmentMap = new Dictionary<string, EnterLeaveListenerState>()); }
+                get { return _fragmentMap ?? (_fragmentMap = new Dictionary<string, Stack<EnterLeaveListenerState>>()); }
+            }
+
+            private void SafeFragmentMapAdd(string name, EnterLeaveListenerState enterLeaveListenerState)
+            {
+                Stack<EnterLeaveListenerState> listenerStates;
+                if (FragmentMap.ContainsKey(name))
+                {
+                    listenerStates = FragmentMap[name];
+                }
+                else
+                {
+                    listenerStates = new Stack<EnterLeaveListenerState>();
+                    FragmentMap[name] = listenerStates;
+                }
+                listenerStates.Push(enterLeaveListenerState);
+            }
+
+            private EnterLeaveListenerState SafeFragmentMapPop(string name)
+            {
+                if (!FragmentMap.ContainsKey(name))
+                {
+                    throw new Exception("Frament Map Enter Leave corrupt");
+                }
+
+                var listenerStates = FragmentMap[name];
+                var item = listenerStates.Pop();
+                return item;
             }
 
             public EnterLeaveListenerState EnterLeaveListenerState { get; private set; }
@@ -43,11 +70,11 @@ namespace P7.GraphQLCore.Validators
 
                 if (enterLeaveListenerState.FragmentSpread != null)
                 {
-                    FragmentMap.Add(enterLeaveListenerState.FragmentSpread.Name, enterLeaveListenerState);
+                    SafeFragmentMapAdd(enterLeaveListenerState.FragmentSpread.Name, enterLeaveListenerState);
                 }
                 else if (enterLeaveListenerState.FragmentDefinition != null)
                 {
-                    CurrentFragmentDefinitionRoot = FragmentMap[enterLeaveListenerState.FragmentDefinition.Name];
+                    CurrentFragmentDefinitionRoot = SafeFragmentMapPop(enterLeaveListenerState.FragmentDefinition.Name);
                     FragmentMap.Remove(enterLeaveListenerState.FragmentDefinition.Name);
                      
                 }
@@ -67,7 +94,7 @@ namespace P7.GraphQLCore.Validators
         private List<IGraphQLClaimsAuthorizationCheck> _graphQLClaimsAuthorizationChecks;
         private IGraphQLFieldAuthority _graphQLFieldAuthority;
        
-        public TestValidationRule( IGraphQLFieldAuthority graphQLFieldAuthority)
+        public RequiresAuthValidationRule( IGraphQLFieldAuthority graphQLFieldAuthority)
         {
           
             _graphQLFieldAuthority = graphQLFieldAuthority;
@@ -205,7 +232,7 @@ namespace P7.GraphQLCore.Validators
         }
     }
 
-    public class RequiresAuthValidationRule : IValidationRule
+    public class OldRequiresAuthValidationRule : IValidationRule
     {
         public INodeVisitor Validate(ValidationContext context)
         {
