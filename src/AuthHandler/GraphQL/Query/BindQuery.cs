@@ -32,7 +32,7 @@ namespace AuthHandler.GraphQL.Query
                     }
                     catch (Exception e)
                     {
-
+                        context.Errors.Add(new ExecutionError("Unable to bind with giving input"));
                     }
                     return null;
                     //                    return await Task.Run(() => { return ""; });

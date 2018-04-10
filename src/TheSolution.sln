@@ -31,6 +31,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P7.Extensions.HealthChecks"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P7.HealthCheck.Core", "P7.HealthCheck.Core\P7.HealthCheck.Core.csproj", "{0E9A7C58-3610-4FB9-AC8F-4245204A4E5E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reference.OIDCApp", "Reference.OIDCApp\Reference.OIDCApp.csproj", "{4600EC67-FE4F-402B-8276-B56FC4EA64F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P7.AspNetCore.Identity.InMemory", "P7.AspNetCore.Identity.InMemory\P7.AspNetCore.Identity.InMemory.csproj", "{48C8B063-E42B-46B7-AD85-DA14A2E7FA04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +97,14 @@ Global
 		{0E9A7C58-3610-4FB9-AC8F-4245204A4E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E9A7C58-3610-4FB9-AC8F-4245204A4E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E9A7C58-3610-4FB9-AC8F-4245204A4E5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4600EC67-FE4F-402B-8276-B56FC4EA64F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4600EC67-FE4F-402B-8276-B56FC4EA64F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4600EC67-FE4F-402B-8276-B56FC4EA64F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4600EC67-FE4F-402B-8276-B56FC4EA64F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48C8B063-E42B-46B7-AD85-DA14A2E7FA04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48C8B063-E42B-46B7-AD85-DA14A2E7FA04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48C8B063-E42B-46B7-AD85-DA14A2E7FA04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48C8B063-E42B-46B7-AD85-DA14A2E7FA04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

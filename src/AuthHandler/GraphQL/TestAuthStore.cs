@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AuthHandler.Google;
 using AuthHandler.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -12,14 +14,21 @@ namespace AuthHandler.GraphQL
     public class TestBindStore : IBindStore
     {
         private IConfiguration _configuration;
-
-        public TestBindStore(IConfiguration configuration)
+        private JwtTokenValidation _jwtTokenValidation;
+        public TestBindStore(IConfiguration configuration, JwtTokenValidation jwtTokenValidation)
         {
             _configuration = configuration;
+            _jwtTokenValidation = jwtTokenValidation;
         }
 
         public async Task<BindResult> BindAsync(string type, string token)
         {
+            if (string.Compare(type, "google", CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) == 0)
+            {
+                var principal = await _jwtTokenValidation.ValidateToken(token);
+               
+               
+            }
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, "bob")

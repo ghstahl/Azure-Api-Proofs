@@ -1,4 +1,5 @@
-﻿using AuthHandler.GraphQL;
+﻿using AuthHandler.Google;
+using AuthHandler.GraphQL;
 using AuthHandler.GraphQL.Mutation;
 using AuthHandler.GraphQL.Query;
 using AuthHandler.Models;
@@ -24,6 +25,8 @@ namespace AuthHandler
             builder.RegisterType<IdentityQuery>().As<IQueryFieldRecordRegistration>();
             builder.RegisterType<BindQuery>().As<IQueryFieldRecordRegistration>();
             builder.RegisterType<SomeRandomMutation>().As<IMutationFieldRecordRegistration>();
+
+            builder.RegisterType<JwtTokenValidation>().SingleInstance();
         }
     }
 }
