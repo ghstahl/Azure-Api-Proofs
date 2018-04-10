@@ -5,19 +5,16 @@ using P7.GraphQLCore;
 using ReferenceHandlers.Models;
 using ReferenceHandlers.Types;
 
-namespace ReferenceHandlers.GraphQL
+namespace ReferenceHandlers.GraphQL.Mutation
 {
-    public class MyMutationFieldRecordRegistrationBase : IMutationFieldRecordRegistration
+    public class CreateHumanMutation : IMutationFieldRecordRegistration
     {
-        private IReferenceStore _referenceStore;
         private StarWarsData _starWarsData;
 
-        public MyMutationFieldRecordRegistrationBase(
-            StarWarsData starWarsData,
-            IReferenceStore referenceStore)
+        public CreateHumanMutation(
+            StarWarsData starWarsData )
         {
             _starWarsData = starWarsData;
-            _referenceStore = referenceStore;
         }
 
         public void AddGraphTypeFields(MutationCore mutationCore)

@@ -1,7 +1,10 @@
 ﻿using AuthHandler.GraphQL;
+using AuthHandler.GraphQL.Mutation;
+using AuthHandler.GraphQL.Query;
 using AuthHandler.Models;
 using Autofac;
- 
+using P7.GraphQLCore;
+
 
 namespace AuthHandler
 {
@@ -12,10 +15,15 @@ namespace AuthHandler
             builder.RegisterType<BindInput>();
             builder.RegisterType<BindResultType>();
             builder.RegisterType<BindInputHandle>();
-            builder.RegisterType<TestBindStore>().As<IBindStore>();
 
             builder.RegisterType<IdentityModelType>();
             builder.RegisterType<ClaimHandleType>();
+
+            builder.RegisterType<TestBindStore>().As<IBindStore>();
+
+            builder.RegisterType<IdentityQuery>().As<IQueryFieldRecordRegistration>();
+            builder.RegisterType<BindQuery>().As<IQueryFieldRecordRegistration>();
+            builder.RegisterType<SomeRandomMutation>().As<IMutationFieldRecordRegistration>();
         }
     }
 }

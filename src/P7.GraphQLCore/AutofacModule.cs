@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AuthHandler.GraphQL;
 using Autofac;
 using GraphQL;
 using GraphQL.Execution;
@@ -30,22 +31,28 @@ namespace P7.GraphQLCore
             // implement IMutationFieldRecordRegistration and IQueryFieldRecordRegistration.
             // We then register every one of them.
             // Future would be to database this, but for now if it is referenced it is in.
+
+            // TODO: Trying out registration in each autofac module, vs a sweep
+
+            /*
             var myTypes = TypeHelper<IQueryFieldRecordRegistration>
                 .FindTypesInAssemblies(TypeHelper<IQueryFieldRecordRegistration>.IsType);
             foreach (var type in myTypes)
             {
                 builder.RegisterType(type).As<IQueryFieldRecordRegistration>();
             }
+            */
             builder.RegisterType<QueryFieldRecordRegistrationStore>()
                 .As<IQueryFieldRecordRegistrationStore>()
                 .SingleInstance();
-
+            /*
             myTypes = TypeHelper<IMutationFieldRecordRegistration>
-                .FindTypesInAssemblies(TypeHelper<IMutationFieldRecordRegistration>.IsType);
+               .FindTypesInAssemblies(TypeHelper<IMutationFieldRecordRegistration>.IsType);
             foreach (var type in myTypes)
             {
-                builder.RegisterType(type).As<IMutationFieldRecordRegistration>();
+               builder.RegisterType(type).As<IMutationFieldRecordRegistration>();
             }
+             */
             builder.RegisterType<MutationFieldRecordRegistrationStore>()
                 .As<IMutationFieldRecordRegistrationStore>()
                 .SingleInstance();
@@ -79,25 +86,28 @@ namespace P7.GraphQLCore
             builder.Register<Func<Type, GraphType>>(c =>
             {
                 var context = c.Resolve<IComponentContext>();
-                return t => {
+                return t =>
+                {
                     var res = context.Resolve(t);
-                    return (GraphType)res;
+                    return (GraphType) res;
                 };
             });
 
-            
+
             builder.RegisterType<RequiresAuthValidationRule>()
                 .As<IPluginValidationRule>()
                 .SingleInstance();
 
             builder.RegisterType<OptOutGraphQLAuthorizationCheck>()
-                       .As<IGraphQLAuthorizationCheck>()
-                       .SingleInstance();
+                .As<IGraphQLAuthorizationCheck>()
+                .SingleInstance();
 
             builder.RegisterType<OptOutGraphQLClaimsAuthorizationCheck>()
                 .As<IGraphQLClaimsAuthorizationCheck>()
                 .SingleInstance();
             builder.RegisterType<DynamicType>();
+            builder.RegisterType<PlaceHolderMutation>().As<IMutationFieldRecordRegistration>();
+
         }
     }
 }

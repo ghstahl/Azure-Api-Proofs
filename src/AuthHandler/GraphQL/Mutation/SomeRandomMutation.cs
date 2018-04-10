@@ -3,13 +3,14 @@ using GraphQL;
 using GraphQL.Types;
 using P7.GraphQLCore;
 
-namespace AuthHandler.GraphQL
+namespace AuthHandler.GraphQL.Mutation
 {
-    public class MyMutationFieldRecordRegistrationBase : IMutationFieldRecordRegistration
+    public class SomeRandomMutation : IMutationFieldRecordRegistration
     {
         public void AddGraphTypeFields(MutationCore mutationCore)
         {
-            mutationCore.FieldAsync<StringGraphType>(name: "placeHolder",
+            /*(
+            mutationCore.FieldAsync<StringGraphType>(name: "someRandomMutation",
                 description: null,
                 arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "id" }),
                 resolve: async context =>
@@ -31,6 +32,7 @@ namespace AuthHandler.GraphQL
                 },
                 deprecationReason: null
             );
+            */
         }
     }
 }
