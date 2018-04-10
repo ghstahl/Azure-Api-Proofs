@@ -1,0 +1,52 @@
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using Reference.OIDCApp.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    if (SignInManager.IsSignedIn(User))
+    {
+        var at = await HttpContextAccessor.HttpContext.GetTokenAsync(IdentityConstants.ExternalScheme, "access_token");
+        var idt = await HttpContextAccessor.HttpContext.GetTokenAsync(IdentityConstants.ExternalScheme, "id_token");
+        var rt = await HttpContextAccessor.HttpContext.GetTokenAsync(IdentityConstants.ExternalScheme, "refresh_token");
+        var tt = await HttpContextAccessor.HttpContext.GetTokenAsync(IdentityConstants.ExternalScheme, "token_type");
+        var ea = await HttpContextAccessor.HttpContext.GetTokenAsync(IdentityConstants.ExternalScheme, "expires_at");
+
+        var oidc = new Dictionary<string, string>
+        {
+            {"access_token", at},
+            {"id_token", idt},
+            {"refresh_token", rt},
+            {"token_type", tt},
+            {"expires_at", ea}
+        };
+        <div class="container">
+            <div class="row">
+                <div class=" table-responsive-md">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">name</th>
+                            <th scope="col">value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in oidc)
+                        {
+                            <tr>
+                                <th scope="row">@item.Key</th>
+                                <td class="word-wrap">@item.Value</td>
+
+                            </tr>
+
+                        }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+}

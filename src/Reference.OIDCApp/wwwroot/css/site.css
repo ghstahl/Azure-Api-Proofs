@@ -33,3 +33,14 @@ body {
         display: none;
     }
 }
+.word-wrap {
+    word-break: break-all;
+    // word-wrap: break-word;
+    // overflow-wrap: break-word;
+}
+.no-wrap {
+    white-space: nowrap;
+}
+.fixed {
+    table-layout: fixed;
+}

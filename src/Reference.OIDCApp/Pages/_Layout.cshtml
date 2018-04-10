@@ -43,6 +43,7 @@
         @RenderBody()
         <hr />
         <footer>
+            @await Html.PartialAsync("_oidcPartial")
             <p>&copy; 2017 - Reference.OIDCApp</p>
         </footer>
         
