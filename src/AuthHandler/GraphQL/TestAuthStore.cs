@@ -23,12 +23,17 @@ namespace AuthHandler.GraphQL
 
         public async Task<BindResult> BindAsync(string type, string token)
         {
-            if (string.Compare(type, "google-id_token", CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) == 0)
+            ClaimsPrincipal cp;
+            switch (type)
             {
-                var principal = await _jwtTokenValidation.ValidateToken(token);
-               
-               
+                case "google-id_token":
+                case "norton-id_token":
+                    // These will throw, but best to let it happen and catch all the way up top.
+                    cp = await _jwtTokenValidation.ValidateToken(type,token);
+                    break;
             }
+            
+
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, "bob")
