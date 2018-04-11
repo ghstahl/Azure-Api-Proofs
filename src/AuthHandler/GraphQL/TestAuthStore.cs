@@ -23,7 +23,7 @@ namespace AuthHandler.GraphQL
 
         public async Task<BindResult> BindAsync(string type, string token)
         {
-            if (string.Compare(type, "google", CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) == 0)
+            if (string.Compare(type, "google-id_token", CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) == 0)
             {
                 var principal = await _jwtTokenValidation.ValidateToken(token);
                

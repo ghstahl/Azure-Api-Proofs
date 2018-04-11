@@ -3,7 +3,7 @@ using GraphQL.Types;
 
 namespace AuthHandler.GraphQL
 {
-    public class IdentityModelType : ObjectGraphType<IdentityModel>
+    public class IdentityModelType : ObjectGraphType<Models.IdentityModel>
     {
         public IdentityModelType()
         {
